@@ -8,6 +8,7 @@ round progression, pot management, and tournament simulation.
 from typing import List, Dict, Optional, Any
 from .deck import Deck, Card
 from .player import Player, Action, PlayerAction, AIPokerPlayer
+from treys import Evaluator, Card as TreysCard
 
 class PokerGame:
     """
@@ -87,9 +88,8 @@ class PokerGame:
 
     def betting_round(self, street: str):
         # Smarter AI: fold weak, call/check medium, bet/raise strong
-        from treys import Evaluator, Card as TreysCard
-        evaluator = Evaluator()
         import random
+        evaluator = Evaluator()
         for player in self.players:
             if not player.is_active or player.is_all_in:
                 continue
@@ -153,7 +153,6 @@ class PokerGame:
 
     def showdown(self):
         # Use treys to evaluate hands
-        from treys import Evaluator, Card as TreysCard
         evaluator = Evaluator()
         best_score = None
         winners = []
